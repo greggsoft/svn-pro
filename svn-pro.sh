@@ -1,4 +1,4 @@
-source .project
+source .svn-project
 
 branch=$2
 if [ -z $branch ];then
