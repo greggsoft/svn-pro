@@ -56,4 +56,8 @@ case $1 in
     read message
     svn ci -m "$message" $project
     ;;
+  relocate )
+    from=$2
+    to=$3
+    svn relocate $from $to $projects
 esac
