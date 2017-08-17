@@ -9,7 +9,10 @@ case $1 in
   co )
     for project in $projects
     do
-      svn co $repo/$project/$branch $project
+      if [ ! -d $project ]
+      then
+        svn co $repo/$project/$branch $project
+      fi
     done
     ;;
   up )
@@ -42,22 +45,10 @@ case $1 in
   branches )
     for project in $projects
     do
-      echo "$project at `svn info $project|grep -F 'Relative URL'|cut -d'/' -f3-4`"
+      if [ -d $project ]
+      then
+        echo "$project at `svn info $project|grep -F 'Relative URL'|cut -d'/' -f3-4`"
+      fi
     done
     ;;
-  ci )
-    project=$2
-    if [ -d $project/lib/levels ];then
-      svn revert -R $project/lib/levels
-    fi
-    svn st $project
-    svn diff $project
-    echo -n "commit message: "
-    read message
-    svn ci -m "$message" $project
-    ;;
-  relocate )
-    from=$2
-    to=$3
-    svn relocate $from $to $projects
 esac
