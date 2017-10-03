@@ -47,7 +47,7 @@ case $1 in
     do
       if [ -d $project ]
       then
-        echo "$project at `svn info $project|grep -F 'Relative URL'|cut -d'/' -f3-4`"
+        echo "$project at `svn info $project|grep -F 'Relative URL'|cut -d'/' -f3-`"
       fi
     done
     ;;
