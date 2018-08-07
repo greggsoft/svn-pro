@@ -19,7 +19,14 @@ case $1 in
     svn up $projects
     ;;
   st )
-    svn st $projects
+    for project in $projects
+    do
+      if [ -d $project ]
+      then
+        echo "$project at `svn info --show-item relative-url $project|cut -d'/' -f3-`@`svn info --show-item revision $project`"
+        svn status $project
+      fi
+    done
     ;;
   diff )
     svn diff $projects
@@ -47,7 +54,7 @@ case $1 in
     do
       if [ -d $project ]
       then
-        echo "$project at `svn info $project|grep -F 'Relative URL'|cut -d'/' -f3-`"
+        echo "$project at `svn info --show-item relative-url $project|cut -d'/' -f3-`"
       fi
     done
     ;;
